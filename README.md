@@ -28,7 +28,7 @@ Instead of labeling 100% of a dataset, annotators may only need to label \~10% t
 ## Note on Dataset
 
 **Important:**
-This repo uses **demo data** only (e.g., public datasets like Kaggle’s *abc dataset*).
+This repo uses **demo data** only (e.g., public datasets like HuggingFace’s *fancyzhx/dbpedia_14 dataset*).
 The real enterprise dataset used in production **cannot be shared**.
 
   - The algorithm is most effective when applied to **short, pre-processed text**.
@@ -42,6 +42,17 @@ The real enterprise dataset used in production **cannot be shared**.
 
 If you want to learn how to fine-tune preprocessing to make text more suitable for this algorithm, please check my guide here:
 [abc.git](https://www.google.com/search?q=https://abc.git)
+
+-----
+
+## Practical Notes from Experiments
+
+**Based on my experiments:**
+      - When applying HDBSCAN on reduced embeddings, using a latent dimensionality of 16–32 (or even smaller) gives more stable and accurate clusters.
+      - Higher dimensions after reduction tend to keep noise, which makes unsupervised clustering less clean.
+      - Therefore, for practical unsupervised text clustering:
+            - Short, pre-processed text + low-dimensional embeddings (≤32) work best.
+            - This ensures HDBSCAN can effectively separate dense regions from noise.
 
 -----
 
@@ -207,4 +218,5 @@ Check the notebook example to see how to replace CPU calls with GPU equivalents.
 Company data is not public. For demonstration, public datasets can be used.
 
 -----
+
 
