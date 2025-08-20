@@ -88,11 +88,11 @@ Common Cluster          Rare Candidate
 ## Repository Structure
 
 ```
-├── data/                     # Datasets (raw + processed, not public)
+├── data/
 │   ├── raw/
 │   ├── processed/
 │   └── README.md
-├── notebooks/                # Demo + GPU accelerated version
+├── notebooks/
 │   ├── 01_demo_pipeline.ipynb
 ├── src/
 │   ├── __init__.py
@@ -218,6 +218,7 @@ Check the notebook example to see how to replace CPU calls with GPU equivalents.
 Company data is not public. For demonstration, public datasets can be used.
 
 -----
+
 
 
 
