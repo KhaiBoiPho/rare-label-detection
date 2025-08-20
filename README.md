@@ -45,6 +45,35 @@ If you want to learn how to fine-tune preprocessing to make text more suitable f
 
 -----
 
+## Pipeline Diagram
+```text
+         ┌──────────────┐
+         │  New Emails  │
+         └──────┬───────┘
+                │
+                ▼
+         ┌──────────────┐
+         │  Embedding   │
+         └──────┬───────┘
+                │
+                ▼
+         ┌──────────────┐
+         │    UMAP      │
+         └──────┬───────┘
+                │
+                ▼
+         ┌──────────────┐
+         │ Sequential   │
+         │ IsolationF.  │
+         └──────┬───────┘
+                │
+   ┌────────────┴────────────┐
+   ▼                         ▼
+Common Cluster          Rare Candidate
+ (ignore)                  (label)
+````
+-----
+
 ## Repository Structure
 
 ```
@@ -178,3 +207,4 @@ Check the notebook example to see how to replace CPU calls with GPU equivalents.
 Company data is not public. For demonstration, public datasets can be used.
 
 -----
+
