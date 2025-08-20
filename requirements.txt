@@ -1,0 +1,112 @@
+---
+
+````markdown
+# Rare Label Detection Pipeline for Email Classification Dataset Building
+
+## 📌 Objective
+When building an enterprise email classification dataset, one common challenge is:
+- A few **dominant labels** occupy up to **~90%** of the dataset.
+- Labeling all new incoming emails wastes time because the **majority labels add no value** once enough samples are collected.
+- **Rare labels** are buried in the data and are hard to find for annotation.
+
+**This algorithm** is designed to **support** dataset construction:
+- Automatically detect and extract **rare emails** from new incoming data.
+- **Reduce labeling time**: Instead of labeling 100% of the new dataset, only label ~10% (rare candidates).
+- Reduce **dataset imbalance** before training the classification model.
+
+> The company dataset is private.  
+> This repository uses the `fancyzhx/dbpedia_14` dataset from Hugging Face as an example.
+
+---
+
+## 🚀 Pipeline Overview
+1. **Filter out rare labels** from the initial dataset (keep only common labels).
+2. **Embed email text** (384-d vector) using a sentence transformer model.
+3. **UMAP** dimensionality reduction to avoid dense overlapping in embedding space.
+4. **HDBSCAN** clustering → keep only clusters with ≥ 10000 samples.
+5. Remove **noise cluster (-1)**.
+6. For each cluster, train an **IsolationForest** using only data from that cluster (positive samples only).
+7. When **new data arrives**:
+   - Pass samples sequentially through each cluster’s IsolationForest model.
+   - If rejected by a cluster model → pass to the next.
+   - If rejected by **all** → mark as **rare candidate**.
+
+---
+
+## Pipeline Diagram
+```text
+         ┌──────────────┐
+         │  New Emails  │
+         └──────┬───────┘
+                │
+                ▼
+         ┌──────────────┐
+         │  Embedding   │
+         └──────┬───────┘
+                │
+                ▼
+         ┌──────────────┐
+         │    UMAP      │
+         └──────┬───────┘
+                │
+                ▼
+         ┌──────────────┐
+         │ Sequential   │
+         │ IsolationF.  │
+         └──────┬───────┘
+                │
+   ┌────────────┴────────────┐
+   ▼                         ▼
+Common Cluster          Rare Candidate
+ (ignore)                  (label)
+````
+
+---
+
+## ⚙️ Installation
+
+```bash
+git clone https://github.com/<your_username>/rare-label-detection.git
+cd rare-label-detection
+
+python -m venv venv
+source venv/bin/activate   # Linux/Mac
+venv\Scripts\activate      # Windows
+
+pip install -r requirements.txt
+```
+
+---
+
+## Usage
+
+### 1. Train the pipeline with common labels
+
+```bash
+python scripts/train_pipeline.py
+```
+
+* Outputs:
+
+  * `models/umap_model.pkl`
+  * `models/iforest_clusters/cluster_<id>.pkl`
+
+### 2. Detect rare samples from new data
+
+```bash
+python scripts/detect_rare.py
+```
+
+* Outputs:
+
+  * `data/rare_candidates.csv`
+
+---
+
+## Run Tests
+
+```bash
+pytest tests/ -v
+```
+
+---
