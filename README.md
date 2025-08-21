@@ -141,7 +141,7 @@ Check the notebook example to see how to replace CPU calls with GPU equivalents.
 1.  Clone the repo:
 
     ```bash
-    git clone https://github.com/yourname/rare-label-detection.git
+    git clone https://github.com/KhaiBoiPho/rare-label-detection.git
     cd rare-label-detection
     ```
 
@@ -218,6 +218,7 @@ Check the notebook example to see how to replace CPU calls with GPU equivalents.
 Company data is not public. For demonstration, public datasets can be used.
 
 -----
+
 
 
 
