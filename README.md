@@ -41,7 +41,7 @@ The real enterprise dataset used in production **cannot be shared**.
   - In practice, this algorithm is particularly useful for **extracting noise/rare samples** from datasets with relatively simple text.
 
 If you want to learn how to fine-tune preprocessing to make text more suitable for this algorithm, please check my guide here:
-[finetune-preprocessing](https://github.com/KhaiBoiPho/finetune-preprocessing)
+[finetune-preprocessing](https://github.com/KhaiBoiPho/finetune-preprocesing)
 
 ---
 
@@ -218,6 +218,7 @@ Check the notebook example to see how to replace CPU calls with GPU equivalents.
 Company data is not public. For demonstration, public datasets can be used.
 
 -----
+
 
 
 
